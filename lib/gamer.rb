@@ -33,12 +33,19 @@ class Gamer
   end
 
   def update(args)
+    name, year, system = args
+    @game = get_game(name)
+    @game.year = year
   end
 
   def delete
   end
   
   def show
+  end
+
+  def get_game(name)
+    @games.find { |game| game.name == name }
   end
 end
 
