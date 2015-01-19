@@ -1,2 +1,4 @@
 Add Earthbound 1996 SNES
 Update Earthbound 1995 SNES
+Add Shaq-fu 1994 SNES
+Delete Shaq-fu

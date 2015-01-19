@@ -38,7 +38,10 @@ class Gamer
     @game.year = year
   end
 
-  def delete
+  def delete(args)
+    name = args
+    @game = get_game(name)
+    @games.delete @game 
   end
   
   def show
