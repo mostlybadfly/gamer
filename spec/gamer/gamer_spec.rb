@@ -15,6 +15,16 @@ describe Gamer do
       input_file = File.open("input.txt", "r")
       gamer = Gamer.new(input_file)
       gamer.parse_input
+      expect(gamer.games.first.year).to eq('1995')
+    end
+  end
+
+  describe '#delete' do
+    it 'deletes an existing game' do
+      input_file = File.open("input.txt", "r")
+      gamer = Gamer.new(input_file)
+      gamer.parse_input
+      expect(gamer.games.last).to be_nil
     end
   end
 end
