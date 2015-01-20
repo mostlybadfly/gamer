@@ -20,7 +20,7 @@ class Gamer
       when "delete"
         delete(args)
       when "show"
-        show(args)
+        show
       else
         raise "Error: invalid command #{ command }."
       end
@@ -45,6 +45,12 @@ class Gamer
   end
   
   def show
+    puts "Your List of games:"
+    @games.each_with_index do  |game, id|
+      id += 1  
+      puts "#{id}.) #{game.name} | #{game.year} | #{game.system}"
+      puts "...thank you!"
+    end
   end
 
   def get_game(name)
