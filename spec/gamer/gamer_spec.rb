@@ -24,7 +24,7 @@ describe Gamer do
       input_file = File.open("input.txt", "r")
       gamer = Gamer.new(input_file)
       gamer.parse_input
-      expect(gamer.games.last).to be_nil
+      expect(gamer.get_game('Shaq-fu')).to be_nil
     end
   end
 end
