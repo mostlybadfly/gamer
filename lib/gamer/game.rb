@@ -5,4 +5,12 @@ class Game
     @year = year
     @system = system
   end
+
+  def to_json
+    JSON.dump ({
+      :name => @name,
+      :year => @year,
+      :system => @system
+    })
+  end
 end

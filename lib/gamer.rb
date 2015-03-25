@@ -1,45 +1,27 @@
 require_relative 'gamer/game'
-
+require 'json'
 
 class Gamer
   attr_accessor :games
-  def initialize(input)
-    @input = input
-    @games = []
+  def initialize
+    @games = File.read("gamelist.json")
+    @games = JSON.parse(@games)
   end
 
-  def parse_input
-    @input.readlines.each do |line|
-      command, *args = line.split
-
-      case command.downcase
-      when "add"
-        add(args)
-      when "update"
-        update(args)
-      when "delete"
-        delete(args)
-      when "show"
-        show
-      else
-        raise "Error: invalid command #{ command }."
-      end
-    end
-  end
-
-  def add(args)
+  def add(*args)
     name, year, system = args
-    @games << Game.new(name, year, system)
+    @games << Game.new(name, year, system).to_json
+    save
   end
-
-  def update(args)
+# TODO
+  def update(*args)
     name, year, system = args
     @game = get_game(name)
     @game.year = year
+    @game.system = system
   end
-
-  def delete(args)
-    name, year, system = args
+# TODO
+  def delete(name)
     @game = get_game(name)
     @games.delete @game
   end
@@ -47,14 +29,21 @@ class Gamer
   def show
     puts "Your List of games:"
     @games.each_with_index do  |game, id|
-      id += 1  
-      puts "#{id}.) #{game.name} | #{game.year} | #{game.system}"
-      puts "...thank you!"
+      id += 1
+      game = JSON.load(game)
+      puts "#{id}.) #{game["name"]} | #{game["year"]} | #{game["system"]}"
     end
+    puts "...thank you!"
   end
 
   def get_game(name)
     @games.find { |game| game.name == name }
+  end
+
+  def save
+    gamefile = File.open("gamelist.json", "w")
+    gamefile.write(@games)
+    gamefile.close
   end
 end
 
