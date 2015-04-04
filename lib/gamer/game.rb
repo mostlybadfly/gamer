@@ -7,10 +7,6 @@ class Game
   end
 
   def to_json
-    JSON.dump ({
-      :name => @name,
-      :year => @year,
-      :system => @system
-    })
+    ({:name => @name,:year => @year,:system => @system}).to_json
   end
 end

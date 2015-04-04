@@ -13,19 +13,19 @@ class Gamer
     @games << Game.new(name, year, system).to_json
     save
   end
-# TODO: have user select game from list and select attribute to change
-  def update
-    puts "Please select the number of the game you want to change:"
-    list
-    choice = gets.chomp
-    @game = get_game(name)
-    @game.year = year
-    @game.system = system
+  
+  def update(id, *new_args)
+    new_name, new_year, new_system = new_args
+    @games[id] = Game.new(new_name, new_year, new_system).to_json
+    puts "new game info:"
+    new_game = JSON.load(@games[id])
+    puts "#{new_game["name"]} | #{new_game["year"]} | #{new_game["system"]}"
+    save
   end
-# TODO: have user select game from list to delete
-  def delete(name)
-    @game = get_game(name)
-    @games.delete @game
+  
+  def delete(id)
+    @games.delete_at(id)
+    save
   end
   
   def show
@@ -35,15 +35,15 @@ class Gamer
   end
 
   def list
-    @games.each_with_index do  |game, id|
-      id += 1
+    @games.each_with_index do  |game, index|
+      index += 1
       game = JSON.load(game)
-      puts "#{id}.) #{game["name"]} | #{game["year"]} | #{game["system"]}"
+      puts "#{index}.) #{game["name"]} | #{game["year"]} | #{game["system"]}"
     end
   end
-# TODO: rework method to get game from @games and JSON.load
-  def get_game(name)
-    @games.find { |game| game.name == name }
+  
+  def get_game(id)
+    JSON.load(@games[id])
   end
 
   def save
