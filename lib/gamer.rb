@@ -4,7 +4,7 @@ require 'json'
 class Gamer
   attr_accessor :games
   def initialize
-    @games = File.read("gamelist.json")
+    @games = File.read("lib/gamer/gamelist.json")
     @games = JSON.parse(@games)
   end
 
@@ -17,6 +17,7 @@ class Gamer
   def update(id, *new_args)
     new_name, new_year, new_system = new_args
     @games[id] = Game.new(new_name, new_year, new_system).to_json
+    puts @games
     puts "new game info:"
     new_game = JSON.load(@games[id])
     puts "#{new_game["name"]} | #{new_game["year"]} | #{new_game["system"]}"
@@ -47,7 +48,7 @@ class Gamer
   end
 
   def save
-    gamefile = File.open("gamelist.json", "w")
+    gamefile = File.open("lib/gamer/gamelist.json", "w")
     gamefile.write(@games)
     gamefile.close
   end
