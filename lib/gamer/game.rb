@@ -6,7 +6,7 @@ class Game
     @system = system
   end
 
-  def to_json
-    ({:name => @name,:year => @year,:system => @system}).to_json
+  def to_json(*a)
+    {:name => @name,:year => @year,:system => @system}.to_json(*a)
   end
 end
