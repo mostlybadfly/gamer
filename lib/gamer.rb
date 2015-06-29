@@ -6,19 +6,17 @@ class Gamer
   def initialize
     @games = File.read("lib/gamer/gamelist.json")
     @games = JSON.parse(@games)
-    p @games
   end
 
   def add(*args)
     name, year, system = args
-    @games << JSON.dump(Game.new(name, year, system))
+    @games << Game.new(name, year, system).to_json
     save
   end
 
   def update(id, *new_args)
     new_name, new_year, new_system = new_args
     @games[id] = (Game.new(new_name, new_year, new_system)).to_json
-    puts @games
     puts "new game info:"
     new_game = JSON.load(@games[id])
     puts "#{new_game["name"]} | #{new_game["year"]} | #{new_game["system"]}"

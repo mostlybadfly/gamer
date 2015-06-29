@@ -6,7 +6,8 @@ describe Gamer do
     it 'adds a new game' do
       gamer = Gamer.new
       gamer.add("Earthbound", "1996", "SNES")
-      expect(gamer.games.first).to be_a(Game)
+      expect(JSON.parse(gamer.games.first)).to be_a(Hash)
+      p JSON.parse(gamer.games.first)
     end
   end
 
@@ -15,7 +16,7 @@ describe Gamer do
       gamer = Gamer.new
       gamer.add("Earthbound", "1996", "SNES")
       gamer.update(0, "Earthbound", "1995", "SNES")
-      expect(gamer.games.first).to eq("1995")
+      expect(gamer.get_game(0)["year"]).to eq("1995")
     end
   end
 
